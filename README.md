@@ -1,2 +1,5 @@
 # DigitalFieldTwin
-This repository contains the source code of my master thesis at the University of Vienna with the title Digital Field Twin. The goal is to create and extend training data for a roughness detection algorithm.  Two ways to generate training data were implemented: 1. data collection workflow: a process that supports a farmer in collecting and annotating data using a smartphone.  2. split and Recombine Dataset: Annotated data can be split, stored in a database and recombined in different combinations.
+This repository contains the source code of my master thesis at the University of Vienna with the title Digital Field Twin. The goal is to create and extend training data for a weed detection algorithm.  
+Two ways to generate training data were implemented: 
+1. Data Collection Workflow: A process that supports a farmer in collecting and annotating data using a smartphone.  
+2. Split and Recombine Dataset: Annotated data can be split, stored in a database and recombined in different combinations.
