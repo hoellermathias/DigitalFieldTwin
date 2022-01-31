@@ -4,4 +4,9 @@ Two ways to generate training data were implemented:
 1. Data Collection Workflow: A process that supports a farmer in collecting and annotating data using a smartphone.  
 2. Split and Recombine Dataset: Annotated data can be split, stored in a database and recombined in different combinations.
 
-![background](images/field_twin_seperation_generation.pdf)
+## Seperation of Annotated Dataset
+
+![separation](images/field_twin_separation_generation.jpg)
+
+
+![background](images/background_removal_soy.jpg)
