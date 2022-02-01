@@ -5,13 +5,15 @@ Two methods to decompose a dataset have been implemented. The method with the po
 The following example annotation yaml file is from [A Crop/Weed Field Image Dataset](https://github.com/cwfid/dataset). The polygons drawn by the annotator are combined with the annotation mask to extract the plants of the image.  
 Structure of the input:
 Path to Parent Dir (`-dPATH`)
+```
 |-- annotations
     |-- *N*_image.png
 |-- images
     |-- *N*_annotation.png
     |-- *N*_annotation.yaml
+```
 The images and annotations have to be PNG files. The script uses the namingscheme of [A Crop/Weed Field Image Dataset](https://github.com/cwfid/dataset). 
-``
+```
 filename: 001_image.png
 annotation:
 - type: weed
@@ -20,7 +22,7 @@ annotation:
       948.0, 937.0, 909.0, 837.0]
     y: [225.0, 234.0, 266.0, 338.0, 408.0, 422.0, 317.0, 230.0, 126.0, 114.0, 130.0,
       167.0, 170.0, 169.0]
-``
+```
 Structure of the Output:
 The individual plant images are stored in the `plants` directory from which the script is called.
-The naming convention is: `{N}_{sequential number}_{plant type}_{width ratio}.png`.
+The naming convention of the output images is: `{N}_{sequential number}_{plant type}_{width ratio}.png`.
