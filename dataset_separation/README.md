@@ -28,4 +28,11 @@ The individual plant images are stored in the `plants` directory from which the 
 The naming convention of the output images is: `{N}_{sequential number}_{plant type}_{width ratio}.png`.
 
 ### Example
-[test_split_singleim](./polygon/test_split_singleim/) contains an example directory structure with one image, the corresponding annotation data of [A Crop/Weed Field Image Dataset](https://github.com/cwfid/dataset) and the images of separated single plants. 
+[test_split_singleim](./test_split_singleim/) contains an example directory structure with one image, the corresponding annotation data of [A Crop/Weed Field Image Dataset](https://github.com/cwfid/dataset) and the images of separated single plants.
+
+Run `ruby seperate_plants.rb -d../test_split_singleim/` to test the setup. This should result in a new `plants` directory equivalent to [test_split_singleim/plants](./test_split_singleim/plants).
+
+## DBSCAN
+Datasets which do not include a polygon annotation file can be separated by a density based clustering algorithm. The separation is split up into two steps. The first script clusters the plants in the annotation masks. The second part crops the plants based on the clustered annotations masks.
+1. DBSCAN: Run `python3 dbscan_plants.py {annotation_dir} {output_dir}` with `annotation_dir= ../test_split_singleim/annotations/` and `ouput_dir= dbscan` to test the script. The result should be a PNG file where each plant in the annotation mask has a different shade of gray.
+2. Separate the Clustered Annotation Masks: Run `ruby seperate_dbscan_annotation.rb -d{dir}` with `dir = ../test_split_singleim/` containing the subdirectories `dbscan` (output of step 1) and `images` (origianl images). 
