@@ -18,4 +18,4 @@ The Data Collection Workflow instructs the user via a smartphone how to collect 
 <img src="images/background_removal_soy.jpg" alt="background removal" width="50%"/>
 
 # Notes
-The published code is adapted to [A Crop/Weed Field Image Dataset](https://github.com/cwfid/dataset). Most datasets have subtle differences in naming, colors in annotation masks or image formats. Therefore it is likely that the code will not work on another dataset right away. 
+The published code is adapted to [A Crop/Weed Field Image Dataset](https://github.com/cwfid/dataset). Most datasets have subtle differences in naming, colors in annotation masks or image formats. Therefore it is likely that the code will not work on another dataset right away. If you want to use the code be sure that the process works properly with the testdata and then try to adjust your data or the algorithm. I am also happy to answer questions regarding the Digital Field Twin.
