@@ -16,3 +16,6 @@ Source of the real world dataset: [A Crop/Weed Field Image Dataset](https://gith
 The Data Collection Workflow instructs the user via a smartphone how to collect and annotate the data in the field. The background is covered by a black paper to make it easier for an algorithm to automatically cut out a single plant.
 
 <img src="images/background_removal_soy.jpg" alt="background removal" width="50%"/>
+
+# Notes
+The published code is adapted to [A Crop/Weed Field Image Dataset](https://github.com/cwfid/dataset). Most datasets have subtle differences in naming, colors in annotation masks or image formats. Therefore it is likely that the code will not work on another dataset right away. 
