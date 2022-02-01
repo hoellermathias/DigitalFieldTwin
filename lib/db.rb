@@ -24,6 +24,9 @@ class DB
                                                 Notes TEXT,
                                                 Timestamp TEXT)"
   end
+  def add_species (species)
+    @db.execute "INSERT INTO species VALUES(null, '#{species}')"
+  end
   def add_plant (species, diameter, age, notes, image_url, good)
     @db.execute "INSERT INTO plants VALUES(null,'#{species}',#{diameter},#{age},'#{notes}','#{image_url}', '#{good && 1 || 0}', CURRENT_TIMESTAMP)"
   end

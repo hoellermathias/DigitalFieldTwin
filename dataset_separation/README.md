@@ -36,3 +36,9 @@ Run `ruby seperate_plants.rb -d../test_split_singleim/` to test the setup. This 
 Datasets which do not include a polygon annotation file can be separated by a density based clustering algorithm. The separation is split up into two steps. The first script clusters the plants in the annotation masks. The second part crops the plants based on the clustered annotations masks.
 1. DBSCAN: Run `python3 dbscan_plants.py {annotation_dir} {output_dir}` with `annotation_dir= ../test_split_singleim/annotations/` and `ouput_dir= dbscan` to test the script. The result should be a PNG file where each plant in the annotation mask has a different shade of gray.
 2. Separate the Clustered Annotation Masks: Run `ruby seperate_dbscan_annotation.rb -d{dir}` with `dir = ../test_split_singleim/` containing the subdirectories `dbscan` (output of step 1) and `images` (origianl images). 
+
+# Database Connection 
+In order to be able to access the different plants in a structured and simple way, the data is stored in a sqlite database. 
+The following example inserts the data separated by the *Polygon Method* into a database and copies the images to another directory where all the plant images are stored.  
+
+`ruby db_connector.rb --dir_dest=./coppedplants --dir_plants=../test_split_singleim/plants/ --path_db=plant.db --px_per_mm=8.95 --age=0 --notes="carrot dataset" --crop=carrot`
