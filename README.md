@@ -1,6 +1,6 @@
 # DigitalFieldTwin
 This repository contains the source code of my master thesis at the University of Vienna with the title Digital Field Twin. The goal is to create and extend training data for a weed detection algorithm. 
-Single images of plants are inserted into ground images. The result is a collection of images and annotation masks of a parameterized field, called Digital Field Twin. 
+Single images of plants are transformed and inserted into ground images. The result is a collection of images and annotation masks of a parameterized field, called Digital Field Twin. 
 
 Two ways to populate the database with images of single plants were implemented: 
 1. Data Collection Workflow: A process that supports a farmer in collecting and annotating data using a smartphone in the field.  
