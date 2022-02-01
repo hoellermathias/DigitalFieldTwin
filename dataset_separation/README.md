@@ -26,3 +26,6 @@ annotation:
 Structure of the Output:
 The individual plant images are stored in the `plants` directory from which the script is called.
 The naming convention of the output images is: `{N}_{sequential number}_{plant type}_{width ratio}.png`.
+
+### Example
+[test_split_singleim](./polygon/test_split_singleim/) contains an example directory structure with one image, the corresponding annotation data of [A Crop/Weed Field Image Dataset](https://github.com/cwfid/dataset) and the images of separated single plants. 
