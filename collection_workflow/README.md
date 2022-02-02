@@ -20,8 +20,8 @@ The images were taken with a HUWEI P20.
    </tr> 
   </tr>
   <tr>
-    <td><img src="./example/b6f32ba6-571c-4a6b-8747-5af210ecd92c.jpg"  alt="1" width ="360px" ></td>
-    <td><img src="./example/b6f32ba6-571c-4a6b-8747-5af210ecd92c.png" alt="2" width = "360px"></td>
+    <td><img src="./example/848b623f-3d85-4daa-b811-1e642c7e8e27.jpg"  alt="1" width ="360px" ></td>
+    <td><img src="./example/848b623f-3d85-4daa-b811-1e642c7e8e27.png" alt="2" width = "360px"></td>
    </tr> 
   </tr>
 </table>
