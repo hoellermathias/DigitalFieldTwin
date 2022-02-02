@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Galvanik</title>
+
+    <!-- libs, do not modify. When local than load local libs. -->
+    <script type="text/javascript" src="/js_libs/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="./ui.css" type="text/css"/>
+    <script type="text/javascript" src="./ui.js"></script>
+
+  </head>
+  <body style="height: 100%;">
+    <form id="attr-from">
+      <label for="species">Species:</label><br>
+      <select id="species" name="species" oninput="store_it(this.name, this.value)">
+      </select> <br>
+      <label for="diameter">Diameter:</label><br>
+      <input type="number" id="diameter" name="diameter" min=0 value="" oninput="store_it(this.name, this.value)"><br>
+      <label for="age">Age (Days):</label><br>
+      <input type="number" id="age" name="age" min=0 value="" oninput="store_it(this.name, this.value)"><br>
+      <label for="notes">Notes:</label><br>
+      <input type="text" id="notes" name="notes" value="" oninput="store_it(this.name, this.value)">
+    </form>
+    <script>
+      load_dataelements();
+      window.top.addEventListener('data_load_end', function(){
+        Object.keys(window.top.sessionStorage).forEach(function(name){
+          const value = window.top.sessionStorage.getItem(name)
+          console.log("AAAAA", value, name)
+          $("#"+name.slice("cpee-".length)).attr('value', JSON.parse(value));
+        });
+        $.each(get_data("species_options"), function(number, elem){
+          $("#species").append(`<option value="${elem}">${elem}</option>`)
+        });
+        $("#species").val(get_data("species")).change().trigger("input");
+        $("#age").val(get_data("age")).change().trigger("input");
+        $("#diameter").val(get_data("diameter")).change().trigger("input");
+        $("#notes").val(get_data("notes")).change().trigger("input");
+      })
+    </script>
+  </body>
+</html>
+

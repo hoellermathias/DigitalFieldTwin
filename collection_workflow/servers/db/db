@@ -1,0 +1,87 @@
+#!/usr/bin/ruby
+#
+# This file is part of centurio.work/queue.
+#
+# centurio.work/queue is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by the Free
+# Software Foundation, either version 3 of the License, or (at your option) any
+# later version.
+#
+# centurio.work/queue is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+# more details.
+#
+# You should have received a copy of the GNU General Public License along with
+# centurio.work/queue (file COPYING in the main directory). If not, see
+# <http://www.gnu.org/licenses/>.
+
+require 'rubygems'
+require 'riddl/server'
+require 'json'
+require_relative 'lib/db'
+
+class DoSpeciesList < Riddl::Implementation #{{{
+  def response
+    db = @a[0]
+    d = db.get_all_species.to_h.to_json
+    Riddl::Parameter::Complex.new('species_list', 'application/json', d) 
+  end
+end #}}}
+
+class DoSavePlantInfo < Riddl::Implementation #{{{
+  def response
+    db = @a[0]
+    db.add_plant(@p[0].value, @p[1].value, @p[2].value, @p[3].value, @r.last, @p[4])
+    nil
+  end
+end #}}}
+
+class GetPlantInfo < Riddl::Implementation #{{{
+  def response
+    p @p
+    db = @a[0]
+    d = db.get_plants_with(species: @p[0]&.value, timestr: @p[3]&.value, age_min: @p[1]&.value, age_max: @p[2]&.value, notes: @p[4]&.value)
+    Riddl::Parameter::Complex.new('plant_list', 'application/json', d.to_json) 
+  end
+end #}}}
+
+class DoSaveGroundInfo < Riddl::Implementation #{{{
+  def response
+    db = @a[0]
+    ppc = @p[0].value
+    notes = @p[1].value
+    db.add_ground(ppc, notes, @r.last)
+    nil
+  end
+end #}}}
+
+options = {
+  :host => 'localhost',
+  :port => 2346,
+  :secure => false
+}
+
+Riddl::Server.new(File.join(__dir__,'/db.xml'), options) do
+  accessible_description true
+  cross_site_xhr true
+  db = DB.new File.join(__dir__, 'test.db')
+
+  on resource do
+    on resource 'species' do
+      run DoSpeciesList, db if get
+    end
+    on resource 'plant' do
+      run GetPlantInfo, db if post 'plant_query'
+      on resource '[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}' do
+        run DoSavePlantInfo, db if post 'plant'
+      end
+    end
+    on resource 'ground' do
+      on resource '[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}' do
+        run DoSaveGroundInfo, db if post 'ground'
+      end
+    end
+  end
+end.loop!
+

@@ -1,0 +1,64 @@
+<!--
+  This file is part of centurio.work/mail.
+
+  centurio.work/mail is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by the Free
+  Software Foundation, either version 3 of the License, or (at your option) any
+  later version.
+
+  centurio.work/mail is distributed in the hope that it will be useful, but
+  WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+  more details.
+
+  You should have received a copy of the GNU General Public License along with
+  centurio.work/mail (file COPYING in the main directory). If not, see
+  <http://www.gnu.org/licenses/>.
+-->
+
+<description xmlns="http://riddl.org/ns/description/1.0" xmlns:ann="http://riddl.org/ns/annotation/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <message name="species_list">
+    <parameter name="list" mimetype="application/json"/>
+  </message>
+  <message name="plant_list">
+    <parameter name="list" mimetype="application/json"/>
+  </message>
+
+  <message name="plant_query">
+    <parameter name="species" type="string"/>
+    <parameter name="age_min" type="string"/>
+    <parameter name="age_max" type="string"/>
+    <parameter name="timestr" type="string"/>
+    <parameter name="notes" type="string"/>
+  </message>
+
+  <message name="plant">
+    <parameter name="species" type="nonNegativeInteger"/>
+    <parameter name="diameter" type="nonNegativeInteger"/>
+    <parameter name="age" type="nonNegativeInteger"/>
+    <parameter name="notes" type="string"/>
+    <parameter name="good" type="boolean"/>
+  </message>
+
+  <message name="ground">
+    <parameter name="ppc" type="nonNegativeInteger"/>
+    <parameter name="notes" type="string"/>
+  </message>
+
+  <resource>
+    <resource relative="species">
+      <get out="species_list"/>
+    </resource>
+    <resource relative="plant">  
+      <post in="plant_query" out="plant_list"/>
+      <resource relative="[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}">
+        <post in="plant"/>	    
+      </resource>
+    </resource>
+    <resource relative="ground">
+      <resource relative="[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}">
+        <post in="ground"/>	    
+      </resource>
+    </resource>
+  </resource>
+</description>

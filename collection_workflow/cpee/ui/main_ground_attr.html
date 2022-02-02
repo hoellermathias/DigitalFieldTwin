@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Galvanik</title>
+
+    <!-- libs, do not modify. When local than load local libs. -->
+    <script type="text/javascript" src="/js_libs/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="./ui.css" type="text/css"/>
+    <script type="text/javascript" src="./ui.js"></script>
+
+  </head>
+  <body style="height: 100%;">
+    <form id="attr-from">
+      <label for="width">Width [cm]:</label><br>
+      <input type="number" id="width" name="width" min=0 value="" oninput="store_it(this.name, this.value)"><br>
+      <label for="notes">Notes:</label><br>
+      <input type="text" id="notes" name="notes" value="" oninput="store_it(this.name, this.value)">
+    </form>
+    <script>
+      load_dataelements();
+      window.top.addEventListener('data_load_end', function(){
+        Object.keys(window.top.sessionStorage).forEach(function(name){
+          const value = window.top.sessionStorage.getItem(name)
+          console.log("AAAAA", value, name)
+          $("#"+name.slice("cpee-".length)).attr('value', JSON.parse(value));
+        });
+        $("#width").val(get_data("width")).change().trigger('input')
+        $("#notes").val(get_data("notes")).change().trigger('input')
+      })
+    </script>
+  </body>
+</html>
+

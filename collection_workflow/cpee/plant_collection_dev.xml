@@ -1,0 +1,380 @@
+<testset xmlns="http://cpee.org/ns/properties/2.0">
+  <executionhandler>ruby</executionhandler>
+  <dataelements>
+    <ret>all good, image cropped and stored</ret>
+    <return>{"CPEE-INSTANCE":"52158","CPEE-INSTANCE-URL":"https://cpee.org/flow/engine/52158","CPEE-INSTANCE-UUID":"aba718fc-606d-49b6-9086-fadd105c7625","CPEE-STATE":"finished","header":"header_start.html","return":{"action":"cancel"},"main":"main_camera.html","button":"button_fertig.html","args":"","base":"https://cpee.org/fieldtwin/framesui/","frame":"crop"}</return>
+    <species_options>{"1":"unknown","2":"weed","3":"crop","4":"corn","5":"rapeseed","6":"soy","7":"sugar beet","8":"carrot","9":"field bean"}</species_options>
+    <imgid/>
+    <notes>home field</notes>
+    <age>0</age>
+    <camstatus/>
+    <action>cancel</action>
+    <species>field bean</species>
+    <diameter>10</diameter>
+    <species_id>9</species_id>
+  </dataelements>
+  <endpoints>
+    <timeout>https://cpee.org/services/timeout.php</timeout>
+    <subprocess>https://cpee.org/flow/start/url/?</subprocess>
+    <plant_db>https://cpee.org/crop/plants</plant_db>
+    <image>https://cpee.org/crop/camera/</image>
+    <subprocess1>https://cpee.org/flow/start/url/</subprocess1>
+  </endpoints>
+  <attributes>
+    <info>plant_collection_dev</info>
+    <creator>Christine Ashcreek</creator>
+    <author>Christine Ashcreek</author>
+    <modeltype>CPEE</modeltype>
+    <theme>extended</theme>
+    <design_dir>Digital Field Twin.dir</design_dir>
+    <design_stage>development</design_stage>
+  </attributes>
+  <description>
+    <description xmlns="http://cpee.org/ns/description/1.0">
+      <call id="a1" endpoint="subprocess">
+        <parameters>
+          <label>show instructions</label>
+          <method>:post</method>
+          <arguments>
+            <behavior>wait_running</behavior>
+            <url>https://cpee.org/design/server/Digital%20Field%20Twin.dir/ui_test.xml</url>
+            <init>!{"header": "header_instructions.html", "main": "main_instructions.html" ,"button": "button_start.html"}.to_json</init>
+          </arguments>
+          <_context_data_analysis>
+            <probes/>
+            <ips/>
+          </_context_data_analysis>
+          <report>
+            <url/>
+          </report>
+        </parameters>
+        <code>
+          <prepare/>
+          <finalize output="result">data.return = result</finalize>
+          <update output="result"/>
+          <rescue output="result"/>
+        </code>
+        <annotations>
+          <_timing>
+            <_timing_weight/>
+            <_timing_avg/>
+            <explanations/>
+          </_timing>
+          <_notes>
+            <_notes_general/>
+          </_notes>
+        </annotations>
+        <input/>
+        <output/>
+        <implementation>
+          <description/>
+        </implementation>
+        <code>
+          <description/>
+        </code>
+      </call>
+      <loop mode="pre_test" condition="data.action != 'cancel'">
+        <_probability>
+          <_probability_min/>
+          <_probability_max/>
+          <_probability_avg/>
+        </_probability>
+        <loop mode="pre_test" condition="data.camstatus.to_s.empty? || data.camstatus.to_i &gt; 300">
+          <_probability>
+            <_probability_min/>
+            <_probability_max/>
+            <_probability_avg/>
+          </_probability>
+          <call id="a3" endpoint="subprocess">
+            <parameters>
+              <label>take image</label>
+              <method>:post</method>
+              <arguments>
+                <behavior>wait_running</behavior>
+                <url>https://cpee.org/design/server/Digital%20Field%20Twin.dir/ui_test.xml</url>
+                <init>!{"header": "header_start.html", "main": "main_camera.html" ,"button": "button_fertig.html"}.to_json</init>
+              </arguments>
+              <stream>
+                <sensors/>
+                <ips/>
+              </stream>
+              <report>
+                <url/>
+              </report>
+            </parameters>
+            <code>
+              <prepare/>
+              <finalize output="result">data.return = result
+data.imgid = data.return['return'].dig('id')
+data.camstatus = data.return['return'].dig('status')
+data.action = result.dig('return', 'action')</finalize>
+              <update output="result"/>
+              <rescue output="result"/>
+            </code>
+            <annotations>
+              <_timing>
+                <_timing_weight/>
+                <_timing_avg/>
+                <explanations/>
+              </_timing>
+              <_notes>
+                <_notes_general/>
+              </_notes>
+            </annotations>
+            <input/>
+            <output/>
+            <implementation>
+              <description/>
+            </implementation>
+            <code>
+              <description/>
+            </code>
+          </call>
+        </loop>
+        <choose mode="exclusive">
+          <alternative condition="data.action != 'cancel'">
+            <_probability>
+              <_probability_min/>
+              <_probability_max/>
+              <_probability_avg/>
+            </_probability>
+            <call id="a6" endpoint="cropimg">
+              <parameters>
+                <label>crop image</label>
+                <method>:post</method>
+                <arguments/>
+                <_context_data_analysis>
+                  <probes/>
+                  <ips/>
+                </_context_data_analysis>
+                <report>
+                  <url/>
+                </report>
+              </parameters>
+              <code>
+                <prepare>endpoints.cropimg = File.join(endpoints.image, 'plant', data.imgid)</prepare>
+                <finalize output="result">data.ret =result</finalize>
+                <update output="result"/>
+                <rescue output="result">data.ret =result</rescue>
+              </code>
+              <annotations>
+                <_timing>
+                  <_timing_weight/>
+                  <_timing_avg/>
+                  <explanations/>
+                </_timing>
+                <_notes>
+                  <_notes_general/>
+                </_notes>
+              </annotations>
+              <input/>
+              <output/>
+              <implementation>
+                <description/>
+              </implementation>
+              <code>
+                <description/>
+              </code>
+            </call>
+            <call id="a4" endpoint="subprocess">
+              <parameters>
+                <label>show cropped image</label>
+                <method>:post</method>
+                <arguments>
+                  <behavior>wait_running</behavior>
+                  <url>https://cpee.org/design/server/Digital%20Field%20Twin.dir/ui_test.xml</url>
+                  <init>!{"header": "header_start.html", "main": "main_show_cropped.html" ,"button": "button_fertig.html", "args": data.args.to_json}.to_json</init>
+                </arguments>
+                <stream>
+                  <sensors/>
+                  <ips/>
+                </stream>
+                <report>
+                  <url/>
+                </report>
+              </parameters>
+              <code>
+                <prepare>data.args = []
+data.args &lt;&lt; {"imgid": data.imgid}</prepare>
+                <finalize output="result">data.return = result
+data.action = result.dig('return', 'action')
+data.camstatus = nil</finalize>
+                <update output="result"/>
+                <rescue output="result"/>
+              </code>
+              <annotations>
+                <_timing>
+                  <_timing_weight/>
+                  <_timing_avg/>
+                  <explanations/>
+                </_timing>
+                <_notes>
+                  <_notes_general/>
+                </_notes>
+              </annotations>
+              <input/>
+              <output/>
+              <implementation>
+                <description/>
+              </implementation>
+              <code>
+                <description/>
+              </code>
+            </call>
+            <choose mode="exclusive">
+              <alternative condition="data.action != 'cancel'">
+                <_probability>
+                  <_probability_min/>
+                  <_probability_max/>
+                  <_probability_avg/>
+                </_probability>
+                <call id="a8" endpoint="plant_db_species">
+                  <parameters>
+                    <label>get species</label>
+                    <method>:get</method>
+                    <arguments/>
+                    <stream>
+                      <sensors/>
+                      <ips/>
+                    </stream>
+                    <report>
+                      <url/>
+                    </report>
+                  </parameters>
+                  <code>
+                    <prepare>endpoints.plant_db_species = File.join(endpoints.plant_db, 'species')</prepare>
+                    <finalize output="result">data.species_options = result</finalize>
+                    <update output="result"/>
+                    <rescue output="result"/>
+                  </code>
+                  <annotations>
+                    <_timing>
+                      <_timing_weight/>
+                      <_timing_avg/>
+                      <explanations/>
+                    </_timing>
+                    <_notes>
+                      <_notes_general/>
+                    </_notes>
+                  </annotations>
+                  <input/>
+                  <output/>
+                  <implementation>
+                    <description/>
+                  </implementation>
+                  <code>
+                    <description/>
+                  </code>
+                </call>
+                <call id="a5" endpoint="subprocess">
+                  <parameters>
+                    <label>plant attributes</label>
+                    <method>:post</method>
+                    <arguments>
+                      <behavior>wait_running</behavior>
+                      <url>https://cpee.org/design/server/Digital%20Field%20Twin.dir/ui_test.xml</url>
+                      <init>!{"header": "header_start.html", "main": "main_plant_attr.html" ,"button": "button_fertig.html", "args": data.args.to_json}.to_json</init>
+                    </arguments>
+                    <stream>
+                      <sensors/>
+                      <ips/>
+                    </stream>
+                    <report>
+                      <url/>
+                    </report>
+                  </parameters>
+                  <code>
+                    <prepare>data.args = []
+data.args &lt;&lt; {"species_options": data.species_options.values}
+data.args &lt;&lt; {"species": data.species}
+data.args &lt;&lt; {"diameter": data.diameter}
+data.args &lt;&lt; {"age": data.age}
+data.args &lt;&lt; {"notes": data.notes}</prepare>
+                    <finalize output="result">data.return = result
+data.notes = data.return['return'].dig('notes')
+data.age = data.return['return'].dig('age')
+data.species = data.return['return'].dig('species')
+data.diameter = data.return['return'].dig('diameter')
+data.species_id = data.species_options.find{|k,v| v == data.species}&amp;.first || 1</finalize>
+                    <update output="result"/>
+                    <rescue output="result"/>
+                  </code>
+                  <annotations>
+                    <_timing>
+                      <_timing_weight/>
+                      <_timing_avg/>
+                      <explanations/>
+                    </_timing>
+                    <_notes>
+                      <_notes_general/>
+                    </_notes>
+                  </annotations>
+                  <input/>
+                  <output/>
+                  <implementation>
+                    <description/>
+                  </implementation>
+                  <code>
+                    <description/>
+                  </code>
+                </call>
+                <call id="a7" endpoint="plant_db">
+                  <parameters>
+                    <label>store to db</label>
+                    <method>:post</method>
+                    <arguments>
+                      <species>!data.species_id.to_s.empty? ? 1 : data.species_id</species>
+                      <diameter>!data.diameter.to_s.empty? ? 0 : data.diameter</diameter>
+                      <age>!data.age.to_s.empty? ? 0 : data.age</age>
+                      <notes>!data.notes.to_s.empty? ? '' : data.notes</notes>
+                      <good>true</good>
+                    </arguments>
+                    <stream>
+                      <sensors/>
+                      <ips/>
+                    </stream>
+                    <report>
+                      <url/>
+                    </report>
+                  </parameters>
+                  <code>
+                    <prepare>endpoints.plant_db = File.join(endpoints.plant_db, 'plant', data.imgid)</prepare>
+                    <finalize output="result"/>
+                    <update output="result"/>
+                    <rescue output="result"/>
+                  </code>
+                  <annotations>
+                    <_timing>
+                      <_timing_weight/>
+                      <_timing_avg/>
+                      <explanations/>
+                    </_timing>
+                    <_notes>
+                      <_notes_general/>
+                    </_notes>
+                  </annotations>
+                  <input/>
+                  <output/>
+                  <implementation>
+                    <description/>
+                  </implementation>
+                  <code>
+                    <description/>
+                  </code>
+                </call>
+              </alternative>
+              <otherwise/>
+            </choose>
+          </alternative>
+          <otherwise/>
+        </choose>
+      </loop>
+      <stop id="a2"/>
+    </description>
+  </description>
+  <transformation>
+    <description type="copy"/>
+    <dataelements type="none"/>
+    <endpoints type="none"/>
+  </transformation>
+</testset>

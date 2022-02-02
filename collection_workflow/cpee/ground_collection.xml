@@ -1,0 +1,178 @@
+<testset xmlns="http://cpee.org/ns/properties/2.0">
+  <executionhandler>ruby</executionhandler>
+  <dataelements>
+    <camstatus/>
+    <return>{"CPEE-INSTANCE":"1011","CPEE-INSTANCE-URL":"https://cpee.org/flow/engine/1011","CPEE-INSTANCE-UUID":"73c718b7-290a-4a15-81cc-414185ab3338","CPEE-STATE":"finished","header":"header_start.html","return":{"action":"done","cpee-notes":"\"boku dilaag\"","width":"98","notes":"boku dilaag","cpee-width":"\"51\""},"main":"main_ground_attr.html","button":"button_fertig.html","args":[{"width":"51"},{"notes":"boku dilaag"}],"base":"https://cpee.org/fieldtwin/framesui/","frame":"ground"}</return>
+    <imgid>a1d24ef6-16f4-4edf-9b5b-c742eac46b56</imgid>
+    <notes>boku dilaag</notes>
+    <width>98</width>
+  </dataelements>
+  <endpoints>
+    <timeout>https://cpee.org/services/timeout.php</timeout>
+    <subprocess>https://cpee.org/flow/start/url/?</subprocess>
+    <ground_db>https://cpee.org/crop/plants</ground_db>
+  </endpoints>
+  <attributes>
+    <info>ground_collection</info>
+    <creator>Christine Ashcreek</creator>
+    <author>Christine Ashcreek</author>
+    <modeltype>CPEE</modeltype>
+    <theme>extended</theme>
+    <design_dir>Digital Field Twin.dir</design_dir>
+    <design_stage>development</design_stage>
+  </attributes>
+  <description>
+    <description xmlns="http://cpee.org/ns/description/1.0">
+      <loop mode="pre_test" condition="data.action.nil? || data.action != 'cancel'">
+        <_probability>
+          <_probability_min/>
+          <_probability_max/>
+          <_probability_avg/>
+        </_probability>
+        <loop mode="pre_test" condition="data.camstatus.nil? || data.camstatus.to_i &gt; 300">
+          <_probability>
+            <_probability_min/>
+            <_probability_max/>
+            <_probability_avg/>
+          </_probability>
+          <call id="a3" endpoint="subprocess">
+            <parameters>
+              <label>take image</label>
+              <method>:post</method>
+              <arguments>
+                <behavior>wait_running</behavior>
+                <url>https://cpee.org/design/server/Digital%20Field%20Twin.dir/ui_ground.xml</url>
+                <init>!{"header": "header_start.html", "main": "main_camera_ground.html" ,"button": "button_fertig.html"}.to_json</init>
+              </arguments>
+              <stream>
+                <sensors/>
+                <ips/>
+              </stream>
+              <report>
+                <url/>
+              </report>
+            </parameters>
+            <code>
+              <prepare/>
+              <finalize output="result">data.return = result
+data.imgid = data.return['return'].dig('id')
+data.camstatus = data.return['return'].dig('status')</finalize>
+              <update output="result"/>
+              <rescue output="result"/>
+            </code>
+            <annotations>
+              <_timing>
+                <_timing_weight/>
+                <_timing_avg/>
+                <explanations/>
+              </_timing>
+              <_notes>
+                <_notes_general/>
+              </_notes>
+            </annotations>
+            <input/>
+            <output/>
+            <implementation>
+              <description/>
+            </implementation>
+            <code>
+              <description/>
+            </code>
+          </call>
+        </loop>
+        <call id="a5" endpoint="subprocess">
+          <parameters>
+            <label>ground attributes</label>
+            <method>:post</method>
+            <arguments>
+              <behavior>wait_running</behavior>
+              <url>https://cpee.org/design/server/Digital%20Field%20Twin.dir/ui_ground.xml</url>
+              <init>!{"header": "header_start.html", "main": "main_ground_attr.html" ,"button": "button_fertig.html", "args": data.args.to_json}.to_json</init>
+            </arguments>
+            <stream>
+              <sensors/>
+              <ips/>
+            </stream>
+            <report>
+              <url/>
+            </report>
+          </parameters>
+          <code>
+            <prepare>data.args = []
+data.args &lt;&lt; {'width': data.width}
+data.args &lt;&lt; {'notes': data.notes}</prepare>
+            <finalize output="result">data.return = result
+data.notes = data.return['return'].dig('notes') || data.notes
+data.width = data.return['return'].dig('width') || data.width</finalize>
+            <update output="result"/>
+            <rescue output="result"/>
+          </code>
+          <annotations>
+            <_timing>
+              <_timing_weight/>
+              <_timing_avg/>
+              <explanations/>
+            </_timing>
+            <_notes>
+              <_notes_general/>
+            </_notes>
+          </annotations>
+          <input/>
+          <output/>
+          <implementation>
+            <description/>
+          </implementation>
+          <code>
+            <description/>
+          </code>
+        </call>
+        <call id="a7" endpoint="ground_db">
+          <parameters>
+            <label>store to db</label>
+            <method>:post</method>
+            <arguments>
+              <ppc>!data.width</ppc>
+              <notes>!data.notes</notes>
+            </arguments>
+            <stream>
+              <sensors/>
+              <ips/>
+            </stream>
+            <report>
+              <url/>
+            </report>
+          </parameters>
+          <code>
+            <prepare>endpoints.ground_db = File.join(endpoints.ground_db, 'ground', data.imgid)</prepare>
+            <finalize output="result">data.camstatus = nil</finalize>
+            <update output="result"/>
+            <rescue output="result"/>
+          </code>
+          <annotations>
+            <_timing>
+              <_timing_weight/>
+              <_timing_avg/>
+              <explanations/>
+            </_timing>
+            <_notes>
+              <_notes_general/>
+            </_notes>
+          </annotations>
+          <input/>
+          <output/>
+          <implementation>
+            <description/>
+          </implementation>
+          <code>
+            <description/>
+          </code>
+        </call>
+      </loop>
+    </description>
+  </description>
+  <transformation>
+    <description type="copy"/>
+    <dataelements type="none"/>
+    <endpoints type="none"/>
+  </transformation>
+</testset>

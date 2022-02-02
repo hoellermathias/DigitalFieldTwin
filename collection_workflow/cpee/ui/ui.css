@@ -1,0 +1,107 @@
+* {
+  font-family: sans-serif;
+  font-size: 20px;
+}
+
+html, body{
+  height: 100%;
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+a {
+  cursor: pointer;
+}
+
+.table {
+  display: table;
+}
+
+.tr {
+  display: table-row;
+}
+
+.tr > * {
+  display: table-cell;
+}
+
+.tr.head > * {
+  font-weight:bold;
+}
+
+.flex {
+  display:flex;
+  flex-direction: row;
+}
+
+#content {
+  padding: 1em;
+  overflow: auto;
+  flex: 1 1 auto;
+}
+#nope {
+  font-weight: bold;
+  padding: 1em;
+}
+
+.hidden {
+  display: none !important;
+}
+
+#control button:focus {
+  border-color: rgba(51, 204, 51, 1.0);
+}
+
+#topbar {
+  height: 95%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-content: flex-start;
+  align-items: center;
+  border-bottom: 2vh solid var(--top-bar-separator-style);
+}
+
+#top_label {
+  flex: 1 1 auto;
+  align-self: center;
+  text-align: center;
+  padding: 0 1em;
+  font-size: 150%;
+  overflow: hidden;
+}
+@media screen and (max-width: 992px) {
+  #top_label {
+    font-size: 50%;
+  }
+}
+@media screen and (max-width: 1800px) and (min-width: 992px) {
+  #top_label {
+    font-size: 150%;
+  }
+}
+
+.touchcontrol {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+ /* Style inputs, select elements and textareas */
+input, select, textarea{
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  resize: vertical;
+}
+.touchcontrol button {
+  flex: 1;
+  margin: 10px;
+}
+
+#attr-form {
+  padding: 10px;
+}

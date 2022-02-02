@@ -1,0 +1,40 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Camera</title>
+  <link rel="stylesheet" href="style.css" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="./ui.css" type="text/css"/>
+  <script type="text/javascript" src="./ui.js"></script>
+  <script>
+  function upload(file) {
+    var form = new FormData(),
+        xhr = new XMLHttpRequest();
+
+    form.append('file', file);
+    xhr.open('post', '/crop/camera/plant/', true);
+    xhr.send(form);
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState == XMLHttpRequest.DONE) {
+        console.log(xhr)
+        send_it({"status": xhr.status, "id": xhr.responseText})
+      }
+    }
+  }
+  </script>
+</head>
+<body>
+  <input type="file" accept="image/*">
+  <canvas></canvas>
+  <script>
+    var input = document.querySelector('input[type=file]'); // see Example 4
+
+    input.onchange = function () {
+      var file = input.files[0];
+
+      upload(file);
+    };
+  </script>
+</body>
+</html>
+

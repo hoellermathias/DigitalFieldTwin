@@ -1,0 +1,280 @@
+<testset xmlns="http://cpee.org/ns/properties/2.0">
+  <executionhandler>ruby</executionhandler>
+  <dataelements>
+    <header>header_scan_empl.html</header>
+    <main>main_first_worker.html</main>
+    <button>cancel_button.html</button>
+    <args/>
+    <base>https://cpee.org/fieldtwin/framesui/</base>
+    <frame>crop</frame>
+  </dataelements>
+  <endpoints>
+    <timeout>http://gruppe.wst.univie.ac.at/~mangler/services/timeout.php</timeout>
+    <frames_init>https-post://cpee.org/out/frames/</frames_init>
+    <frames_display>https-put://cpee.org/out/frames/</frames_display>
+  </endpoints>
+  <attributes>
+    <info>ui_test</info>
+    <modeltype>CPEE</modeltype>
+    <theme>preset</theme>
+    <design_stage>development</design_stage>
+    <design_dir>Digital Field Twin.dir</design_dir>
+    <creator>Mathias Höller</creator>
+    <author>Christine Ashcreek</author>
+  </attributes>
+  <description>
+    <description xmlns="http://cpee.org/ns/description/1.0">
+      <call id="a3" endpoint="frames_init">
+        <parameters>
+          <label>init</label>
+          <arguments>
+            <style_url/>
+            <document_url>none</document_url>
+            <x_amount>10</x_amount>
+            <y_amount>10</y_amount>
+            <lang>de-at</lang>
+          </arguments>
+          <stream>
+            <sensors/>
+            <ips/>
+          </stream>
+          <report>
+            <url/>
+          </report>
+        </parameters>
+        <code>
+          <prepare>endpoints.frames_init= File.join(endpoints.frames_init, data.frame)</prepare>
+          <finalize output="result"/>
+          <update output="result"/>
+          <rescue output="result"/>
+        </code>
+        <annotations>
+          <_timing>
+            <_timing_weight/>
+            <_timing_avg/>
+            <explanations/>
+          </_timing>
+          <_notes>
+            <_notes_general/>
+          </_notes>
+        </annotations>
+        <input/>
+        <output/>
+        <implementation>
+          <description/>
+        </implementation>
+        <code>
+          <description/>
+        </code>
+      </call>
+      <call id="a6" endpoint="framesdata">
+        <parameters>
+          <label>dataelements</label>
+          <method>:post</method>
+          <arguments>
+            <data>!data.args</data>
+          </arguments>
+          <stream>
+            <sensors/>
+            <ips/>
+          </stream>
+          <report>
+            <url/>
+          </report>
+        </parameters>
+        <code>
+          <prepare>endpoints.framesdata= File.join(endpoints.frames_init, data.frame, 'dataelements.json')</prepare>
+          <finalize output="result"/>
+          <update output="result"/>
+          <rescue output="result"/>
+        </code>
+        <annotations>
+          <_timing>
+            <_timing_weight/>
+            <_timing_avg/>
+            <explanations/>
+          </_timing>
+          <_notes>
+            <_notes_general/>
+          </_notes>
+        </annotations>
+        <input/>
+        <output/>
+        <implementation>
+          <description/>
+        </implementation>
+        <code>
+          <description/>
+        </code>
+      </call>
+      <parallel wait="1">
+        <parallel_branch pass="" local="">
+          <call id="a5" endpoint="frames_display">
+            <parameters>
+              <label>button</label>
+              <arguments>
+                <type>wait</type>
+                <lx>0</lx>
+                <ly>9</ly>
+                <x_amount>10</x_amount>
+                <y_amount>1</y_amount>
+                <button/>
+                <style/>
+                <urls>
+                  <urls_item>
+                    <lang>de-at</lang>
+                    <url>!File.join(data.base,data.button)</url>
+                  </urls_item>
+                </urls>
+                <default/>
+              </arguments>
+              <_context_data_analysis>
+                <probes/>
+                <ips/>
+              </_context_data_analysis>
+              <report>
+                <url/>
+              </report>
+            </parameters>
+            <code>
+              <prepare>endpoints.frames_display= File.join(endpoints.frames_display, data.frame)</prepare>
+              <finalize output="result">data.return = result</finalize>
+              <update output="result"/>
+              <rescue output="result"/>
+            </code>
+            <annotations>
+              <_timing>
+                <_timing_weight/>
+                <_timing_avg/>
+                <explanations/>
+              </_timing>
+              <_notes>
+                <_notes_general/>
+              </_notes>
+            </annotations>
+            <input/>
+            <output/>
+            <implementation>
+              <description/>
+            </implementation>
+            <code>
+              <description/>
+            </code>
+          </call>
+        </parallel_branch>
+        <parallel_branch pass="" local="">
+          <call id="a1" endpoint="frames_display">
+            <parameters>
+              <label>main</label>
+              <arguments>
+                <type>wait</type>
+                <lx>0</lx>
+                <ly>0</ly>
+                <x_amount>10</x_amount>
+                <y_amount>9</y_amount>
+                <button/>
+                <style/>
+                <urls>
+                  <urls_item>
+                    <lang>de-at</lang>
+                    <url>!data.main</url>
+                  </urls_item>
+                </urls>
+                <default/>
+              </arguments>
+              <_context_data_analysis>
+                <probes/>
+                <ips/>
+              </_context_data_analysis>
+              <report>
+                <url/>
+              </report>
+            </parameters>
+            <code>
+              <prepare>endpoints.frames_display= File.join(endpoints.frames_display, data.frame)
+data.main = URI(data.main).host &amp;&amp; data.main || File.join(data.base,data.main)</prepare>
+              <finalize output="result">data.return = result</finalize>
+              <update output="result"/>
+              <rescue output="result"/>
+            </code>
+            <annotations>
+              <_timing>
+                <_timing_weight/>
+                <_timing_avg/>
+                <explanations/>
+              </_timing>
+              <_notes>
+                <_notes_general/>
+              </_notes>
+            </annotations>
+            <input/>
+            <output/>
+            <implementation>
+              <description/>
+            </implementation>
+            <code>
+              <description/>
+            </code>
+          </call>
+        </parallel_branch>
+      </parallel>
+      <call id="a2" endpoint="frames_display">
+        <parameters>
+          <label>wait</label>
+          <arguments>
+            <type>set</type>
+            <lx>0</lx>
+            <ly>0</ly>
+            <x_amount>10</x_amount>
+            <y_amount>10</y_amount>
+            <button/>
+            <style/>
+            <urls>
+              <urls_item>
+                <lang>de-at</lang>
+                <url>!File.join(data.base,'loading.html')</url>
+              </urls_item>
+            </urls>
+            <default/>
+          </arguments>
+          <stream>
+            <sensors/>
+            <ips/>
+          </stream>
+          <report>
+            <url/>
+          </report>
+        </parameters>
+        <code>
+          <prepare>endpoints.frames_display= File.join(endpoints.frames_display, data.frame)</prepare>
+          <finalize output="result"/>
+          <update output="result"/>
+          <rescue output="result"/>
+        </code>
+        <annotations>
+          <_timing>
+            <_timing_weight/>
+            <_timing_avg/>
+            <explanations/>
+          </_timing>
+          <_notes>
+            <_notes_general/>
+          </_notes>
+        </annotations>
+        <input/>
+        <output/>
+        <implementation>
+          <description/>
+        </implementation>
+        <code>
+          <description/>
+        </code>
+      </call>
+    </description>
+  </description>
+  <transformation>
+    <description type="copy"/>
+    <dataelements type="none"/>
+    <endpoints type="none"/>
+  </transformation>
+</testset>
