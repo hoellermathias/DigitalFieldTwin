@@ -4,10 +4,14 @@
  ## Example of an Image of a Carrot DFT
  
  <table>
+   <tr>
+    <td><img src="./test/images/0.jpg"  alt="1" width ="360px" ></td>
+    <td><img src="./test/annotations/0.png" alt="2" width = "360px"></td>
+   </tr> 
+  </tr>
   <tr>
-    <td> <img src="./test/images/32.jpg"  alt="1" width = 360px ></td>
-
-    <td><img src="./test/annotations/32.png" alt="2" width = 360px></td>
+    <td><img src="./test/images/32.jpg"  alt="1" width ="360px" ></td>
+    <td><img src="./test/annotations/32.png" alt="2" width = "360px"></td>
    </tr> 
   </tr>
 </table>
