@@ -15,7 +15,7 @@ The services have a REST interface which is used to coordinate the services and 
 <img src="./cpee/plant_collection_dev.png"  alt="1" width ="400px" >
 
 ## Example
-The images were taken with a HUWEI P20.
+The images were taken with a HUAWEI P20.
  <table>
    <tr>
     <td><img src="./example/3aa48824-b7d8-4695-961b-561d9897dad5.jpg"  alt="1" width ="360px" ></td>
