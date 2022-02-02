@@ -1,0 +1,14 @@
+---
+  ground_dir: ../dataset_separation/test_split_singleim/grounds
+  plant_dir: ../dataset_separation/test_split_singleim/croppedplants
+  path_db: ../dataset_separation/test_split_singleim/plant.db
+  ground_opts: 
+    notes: ~
+  crops: ['carrot']
+  weeds: ['weed']
+  plant_opts:
+    age_min: ~
+    age_max: ~
+    notes: ~
+  num_grounds: 10
+  iter_per_ground: 5

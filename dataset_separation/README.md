@@ -41,4 +41,4 @@ Datasets which do not include a polygon annotation file can be separated by a de
 In order to be able to access the different plants in a structured and simple way, the data is stored in a sqlite database. 
 The following example inserts the data separated by the *Polygon Method* into a database and copies the images to another directory where all the plant images are stored.  
 
-`ruby db_connector.rb --dir_dest=../test_split_singleim/coppedplants --dir_plants=../test_split_singleim/plants/ --path_db=../test_split_singleim/plant.db --px_per_mm=8.95 --age=0 --notes="carrot dataset" --crop=carrot`
+`ruby db_connector.rb --dir_dest=../test_split_singleim/croppedplants --dir_plants=../test_split_singleim/plants/ --path_db=../test_split_singleim/plant.db --px_per_mm=8.95 --age=0 --notes="carrot dataset" --crop=carrot`
