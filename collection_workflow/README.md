@@ -5,7 +5,7 @@ The services have a REST interface which is used to coordinate the services and 
 
 | Name                   | Description |
 | ---------------------- | ----------- |
-| Show Instructions      | The first step is to instruct the user what to do. The scene has to be prepared in a manner that only one plant is in the image and the | | background is black. The ground and other plants are covered with black paper. |
+| Show Instructions      | The first step is to instruct the user what to do. The scene has to be prepared in a manner that only one plant is in the image and the background is black. The ground and other plants are covered with black paper. |
 | Take Image             | The second task is to take an image showing the black background and the plant. |
 | Crop Image             | Trigger the cropping algorithm and wait till it has finished. |
 | Show Cropped Image     | Show the cropped image to the user. The user gives feedback about the cropped image. If the cropped image of the plant is bad (e.g. a lot of background pixels are present) the user can start at Take Image again. |
