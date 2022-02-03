@@ -4,7 +4,7 @@ Single images of plants are transformed and inserted into ground images. The res
 
 Two ways to populate the database with images of single plants were implemented: 
 1. Data Collection Workflow: A process that supports a farmer in collecting and annotating data using a smartphone in the field.  
-2. Split Dataset: Annotation masks or information on the polygons used for edging the plants are used to split up a dataset into sinle plants.
+2. Split Dataset: Annotation masks or information on the polygons used for edging the plants are used to split up a dataset into single plants.
 
 ## Separation of Annotated Dataset
 The following image illustrates the pipeline to split and recombine a dataset. The real world annotated dataset is separated based on the annotation mask. The images and some metadata (e.g. size, age and species) are stored in a database. The cropped plant images are loaded from the database based on age, species or notes. The single plant images are then inserted into a ground image and combined to a "Digital Field Twin".
